@@ -212,5 +212,36 @@ footer {
   margin-top: 8px;
   text-align: center;
 }
+#controls {
+  margin: 64px 0;
+}
+#controls h2 {
+  text-align: center;
+}
+.controls-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+.control-item {
+  background: rgba(20, 14, 14, 0.7);
+  border: 1px solid rgba(217, 51, 31, 0.3);
+  padding: 16px;
+  color: #d4cfc6;
+  font-size: 0.95rem;
+}
+.control-item:hover {
+  border-color: #d9331f;
+}
+.key {
+  display: inline-block;
+  background: #120d0d;
+  border: 1px solid #444;
+  color: #d9331f;
+  padding: 4px 8px;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  border-radius: 4px;
+}
 
 
