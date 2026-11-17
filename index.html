@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>63zyMHblN Project — хоррор-игры</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="hero">
+  <div class="moon"></div>
+  <h1 class="studio-name">63zy<span>MHblN</span> Project</h1>
+  <p class="tagline">Игры, от которых не хочется отходить от экрана</p>
+  <a href="#games" class="cta">МОИ ИГРЫ</a>
+</header>
+
+<main>
+  <section id="games">
+    <h2>ИГРЫ</h2>
+
+    <article class="game-card">
+      <div class="game-info">
+        <h3>AFTER WAVE</h3>
+        <p class="genre">Хоррор-шутер на выживание • КОШМАР-сложность</p>
+        <p>Волны зомби не заканчиваются. Фургон — твоя единственная опора.
+           Пять стволов, шприц и два ремнабора. Продержись как можно дольше.</p>
+
+        <div class="trailer">
+          <video controls preload="metadata" poster="images/trailer_poster.jpg">
+            <source src="videos/trailer.mp4" type="video/mp4">
+            Ваш браузер не поддерживает видео.
+          </video>
+          <p class="trailer-caption">ТРЕЙЛЕР // А ТЫ СМОЖЕШЬ ВЫЖИТЬ?</p>
+        </div>
+
+        <div class="game-actions">
+          <a href="files/afterwave_1.0.zip" class="btn-download" download>СКАЧАТЬ v1.0</a>
+          <a href="#" class="btn-ghost">ПАТЧ-НОТЫ</a>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+  <section id="updates">
+    <h2>ОБНОВЛЕНИЯ</h2>
+    <div class="update-entry">
+      <span class="version">v1.0</span>
+      <span class="date">2026-11-15</span>
+      <p>Первый релиз AFTER WAVE.</p>
+    </div>
+  </section>
+
+  <section id="feedback">
+    <h2>ОБРАТНАЯ СВЯЗЬ</h2>
+    <p class="feedback-note">Нашёл баг, идеи для игры или просто хочешь сказать спасибо — пиши, всё читаю.</p>
+
+    <form class="feedback-form" action="https://formspree.io/f/xwloloko" method="POST">
+      <input type="text" name="name" placeholder="Имя (необязательно)" maxlength="50">
+
+      <input type="email" name="email" placeholder="Email для ответа" required maxlength="100">
+
+      <select name="topic">
+        <option value="idea">Идея / пожелание</option>
+        <option value="bug">Баг в игре</option>
+        <option value="other">Другое</option>
+      </select>
+
+      <textarea name="message" placeholder="Твоё сообщение..." rows="6" required maxlength="2000"></textarea>
+
+      <button type="submit" class="btn-download">ОТПРАВИТЬ</button>
+    </form>
+
+    <p class="feedback-status" id="feedback-status"></p>
+  </section>
+</main>
+
+<footer>
+  <p>© 2026 63zyMHblN Project</p>
+</footer>
+
+<script src="grain.js"></script>
+</body>
+</html>
