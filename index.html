@@ -4,19 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>63zyMHblN Project — хоррор-игры</title>
+  <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<!-- Экран загрузки с пасхалками -->
+<div id="load-screen">
+  <div id="load-title">AFTER WAVE</div>
+  <div id="load-tip"></div>
+</div>
+
 <header class="hero">
   <div class="moon"></div>
-  <h1 class="studio-name">63zy<span>MHblN</span> Project</h1>
+  <h1 class="studio-name glitch">63zy<span>MHblN</span> Project</h1>
   <p class="tagline">Игры, от которых не хочется отходить от экрана</p>
   <a href="#games" class="cta">МОИ ИГРЫ</a>
 </header>
 
 <main>
-  <section id="games">
+  <section id="games" class="reveal">
     <h2>ИГРЫ</h2>
 
     <article class="game-card">
@@ -42,8 +49,17 @@
     </article>
   </section>
 
-  <!-- Блок управления -->
-  <section id="controls">
+  <!-- Галерея: заработает, когда положишь скриншоты в папку screenshots/ -->
+  <section id="gallery" class="reveal">
+    <h2>ГАЛЕРЕЯ // КАДРЫ ИЗ ИГРЫ</h2>
+    <div class="gallery">
+      <img src="screenshots/s1.jpg" alt="AFTER WAVE — кадр 1" loading="lazy">
+      <img src="screenshots/s2.jpg" alt="AFTER WAVE — кадр 2" loading="lazy">
+      <img src="screenshots/s3.jpg" alt="AFTER WAVE — кадр 3" loading="lazy">
+    </div>
+  </section>
+
+  <section id="controls" class="reveal">
     <h2>УПРАВЛЕНИЕ</h2>
     <div class="controls-grid">
       <div class="control-item"><span class="key">WASD</span> — Ходьба</div>
@@ -56,9 +72,8 @@
       <div class="control-item"><span class="key">ПКМ</span> — Прицел (только на снайперской винтовке)</div>
     </div>
   </section>
-  <!-- Конец блока управления -->
 
-  <section id="updates">
+  <section id="updates" class="reveal">
     <h2>ОБНОВЛЕНИЯ</h2>
     <div class="update-entry">
       <span class="version">v1.0</span>
@@ -67,7 +82,7 @@
     </div>
   </section>
 
-  <section id="feedback">
+  <section id="feedback" class="reveal">
     <h2>ОБРАТНАЯ СВЯЗЬ</h2>
     <p class="feedback-note">Нашёл баг, идеи для игры или просто хочешь сказать спасибо — пиши, всё читаю.</p>
 
@@ -96,5 +111,48 @@
 </footer>
 
 <script src="grain.js"></script>
+<script>
+  // Экран загрузки: случайная фраза
+  const tips = [
+    'СОВЕТ: ЭКОНОЛЬ ПАТРОНЫ. ИХ ВСЕГДА МЕНЬШЕ, ЧЕМ ЗОМБИ.',
+    'СОВЕТ: ФУРГОН — НЕ МАШИНА. ФУРГОН — ДОМ.',
+    'СОВЕТ: СНАЙПЕРСКАЯ ВИНТОВКА ЛЮБИТ ТИХИХ.',
+    'ФАКТ: 63ZYMHBLN СЛЫШАТ ТЕБЯ, КОГДА ТЫ ДЫШИШЬ.',
+    'СОВЕТ: НЕ СМОТРИ В ОКНО. ОКНО СМОТРИТ В ТЕБЯ.',
+    'СОВЕТ: РЕМНАБОРЫ СПАСАЮТ ТОЛЬКО ТЕХ, КТО ИХ ВЗЯЛ.',
+    'СИГНАЛ ПОТЕРЯН... ВЫЖИВАНИЕ ПРОДОЛЖАЕТСЯ.'
+  ];
+  document.getElementById('load-tip').textContent =
+    tips[Math.floor(Math.random() * tips.length)];
+
+  const loadScreen = document.getElementById('load-screen');
+  setTimeout(() => loadScreen.classList.add('hidden'), 2200);
+
+  // Секретная пасхалка: код ↑↑↓↓←→←→BA
+  const konami = ['arrowup','arrowup','arrowdown','arrowdown',
+    'arrowleft','arrowright','arrowleft','arrowright','b','a'];
+  let buf = [];
+  document.addEventListener('keydown', e => {
+    buf.push(e.key.toLowerCase());
+    buf = buf.slice(-10);
+    if (buf.join('|') === konami.join('|')) {
+      document.getElementById('load-tip').textContent =
+        'ЧЕРЕП ВИДЕЛ ТВОЙ ПРИЁМ. УРОВЕНЬ КОШМАР ОТКРЫТ В СЕРДЦЕ.';
+      loadScreen.classList.remove('hidden');
+      setTimeout(() => loadScreen.classList.add('hidden'), 3000);
+    }
+  });
+
+  // Плавное появление блоков при прокрутке
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
