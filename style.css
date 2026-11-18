@@ -337,4 +337,27 @@ body.flicker { animation: screen-flicker .4s linear; }
 @keyframes trail-fade {
   to { opacity: 0; transform: translate(-50%, -50%) scale(3); }
 }
+.hero { position: relative; overflow: hidden; }
+
+.fog {
+  position: absolute;
+  bottom: -60px;
+  width: 160%;
+  height: 220px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(200, 200, 200, .05) 0%,
+    rgba(200, 200, 200, .02) 40%,
+    transparent 70%
+  );
+  filter: blur(18px);
+  pointer-events: none;
+}
+.fog-1 { left: -30%; animation: drift 26s linear infinite; }
+.fog-2 { left: -60%; bottom: -100px; animation: drift 38s linear infinite reverse; }
+
+@keyframes drift {
+  from { transform: translateX(-25%); }
+  to   { transform: translateX(75%); }
+}
 
