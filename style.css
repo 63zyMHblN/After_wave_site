@@ -323,5 +323,18 @@ footer {
   60% { filter: none; }
 }
 body.flicker { animation: screen-flicker .4s linear; }
-
+.trail-dot {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #e63946;
+  pointer-events: none;
+  z-index: 997;
+  transform: translate(-50%, -50%);
+  animation: trail-fade .6s ease-out forwards;
+}
+@keyframes trail-fade {
+  to { opacity: 0; transform: translate(-50%, -50%) scale(3); }
+}
 
