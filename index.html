@@ -153,6 +153,18 @@
     });
   }, { threshold: 0.15 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+// Случайное мерцание экрана
+const body = document.body;
+function scheduleFlicker() {
+  setTimeout(() => {
+    body.classList.add('flicker');
+    setTimeout(() => {
+      body.classList.remove('flicker');
+      scheduleFlicker();
+    }, 450);
+  }, 8000 + Math.random() * 12000);
+}
+scheduleFlicker();
 </script>
 </body>
 </html>
