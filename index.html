@@ -6,6 +6,132 @@
   <title>63zyMHblN Project — хоррор-игры</title>
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* === Карусель галереи (автономный блок стилей) === */
+    #gallery h2 { text-align: center; }
+
+    .carousel {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      background: #000;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transform: scale(1.06);
+      transition: opacity 0.9s ease, transform 5s ease;
+      pointer-events: none;
+    }
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .slide.active {
+      opacity: 1;
+      transform: scale(1.0);
+      pointer-events: auto;
+    }
+    /* Медленный «дыхательный» зум активного кадра — живость без движения */
+    .slide.active img {
+      animation: slow-zoom 12s ease-in-out infinite alternate;
+    }
+    @keyframes slow-zoom {
+      from { transform: scale(1.0); }
+      to   { transform: scale(1.05); }
+    }
+
+    /* Подпись кадра */
+    .slide-caption {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: 14px 18px;
+      font-size: 13px;
+      letter-spacing: 2px;
+      color: rgba(255, 255, 255, 0.85);
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.75), transparent);
+      text-transform: uppercase;
+    }
+
+    /* Стрелки */
+    .car-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.45);
+      color: #fff;
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      opacity: 0.55;
+      transition: opacity 0.25s, background 0.25s;
+      z-index: 3;
+      user-select: none;
+    }
+    .car-btn:hover { opacity: 1; background: rgba(0, 0, 0, 0.75); }
+    .car-prev { left: 14px; }
+    .car-next { right: 14px; }
+
+    /* Точки */
+    .car-dots {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 3;
+    }
+    .car-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: none;
+      padding: 0;
+      background: rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .car-dot.active {
+      background: #fff;
+      transform: scale(1.25);
+    }
+
+    /* Прогресс автолистания — тонкая полоса снизу */
+    .car-progress {
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, rgba(220, 40, 40, 0.9), rgba(255, 120, 60, 0.9));
+      z-index: 4;
+      transition: none;
+    }
+    .car-progress.run {
+      animation: car-progress 5s linear forwards;
+    }
+    @keyframes car-progress {
+      from { width: 0%; }
+      to   { width: 100%; }
+    }
+
+    @media (max-width: 640px) {
+      .car-btn { display: none; }
+      .slide-caption { font-size: 11px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -18,7 +144,7 @@
 <header class="hero">
   <div class="moon"></div>
   <div class="fog fog-1"></div>
-<div class="fog fog-2"></div>
+  <div class="fog fog-2"></div>
   <h1 class="studio-name glitch">63zy<span>MHblN</span> Project</h1>
   <p class="tagline">Игры, от которых не хочется отходить от экрана</p>
   <a href="#games" class="cta">МОИ ИГРЫ</a>
@@ -51,13 +177,37 @@
     </article>
   </section>
 
-  <!-- Галерея: заработает, когда положишь скриншоты в папку screenshots/ -->
+  <!-- Галерея: 5 скриншотов в screenshots/, имена s1.jpg ... s5.jpg -->
   <section id="gallery" class="reveal">
     <h2>ГАЛЕРЕЯ // КАДРЫ ИЗ ИГРЫ</h2>
-    <div class="gallery">
-      <img src="screenshots/s1.jpg" alt="AFTER WAVE — кадр 1" loading="lazy">
-      <img src="screenshots/s2.jpg" alt="AFTER WAVE — кадр 2" loading="lazy">
-      <img src="screenshots/s3.jpg" alt="AFTER WAVE — кадр 3" loading="lazy">
+    <div class="carousel" id="carousel">
+
+      <div class="slide active">
+        <img src="screenshots/s1.jpg" alt="AFTER WAVE — кадр 1" loading="eager">
+        <div class="slide-caption">Волна 3 // Толпа у фургона</div>
+      </div>
+      <div class="slide">
+        <img src="screenshots/s2.jpg" alt="AFTER WAVE — кадр 2" loading="lazy">
+        <div class="slide-caption">Снайперская винтовка // Прицельный выстрел</div>
+      </div>
+      <div class="slide">
+        <img src="screenshots/s3.jpg" alt="AFTER WAVE — кадр 3" loading="lazy">
+        <div class="slide-caption">Полночь // Огни фар против орды</div>
+      </div>
+      <div class="slide">
+        <img src="screenshots/s4.jpg" alt="AFTER WAVE — кадр 4" loading="lazy">
+        <div class="slide-caption">Шприц // Лечение в упор</div>
+      </div>
+      <div class="slide">
+        <img src="screenshots/s5.jpg" alt="AFTER WAVE — кадр 5" loading="lazy">
+        <div class="slide-caption">Брут // Он не один</div>
+      </div>
+
+      <button class="car-btn car-prev" id="car-prev" aria-label="Предыдущий кадр">‹</button>
+      <button class="car-btn car-next" id="car-next" aria-label="Следующий кадр">›</button>
+
+      <div class="car-dots" id="car-dots"></div>
+      <div class="car-progress" id="car-progress"></div>
     </div>
   </section>
 
@@ -85,7 +235,7 @@
   </section>
 
   <section id="feedback" class="reveal">
-    <h2>ОБРАТНАЯ СВЯЗЬ</h2>
+    <h2>ОБРАЗНАЯ СВЯЗЬ</h2>
     <p class="feedback-note">Нашёл баг, идеи для игры или просто хочешь сказать спасибо — пиши, всё читаю.</p>
 
     <form class="feedback-form" action="https://formspree.io/f/xwloloko" method="POST">
@@ -155,27 +305,81 @@
     });
   }, { threshold: 0.15 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-// Случайное мерцание экрана
-const body = document.body;
-function scheduleFlicker() {
-  setTimeout(() => {
-    body.classList.add('flicker');
+
+  // Случайное мерцание экрана
+  const body = document.body;
+  function scheduleFlicker() {
     setTimeout(() => {
-      body.classList.remove('flicker');
-      scheduleFlicker();
-    }, 450);
-  }, 8000 + Math.random() * 12000);
-}
-scheduleFlicker();
-// Красный след за курсором
-document.addEventListener('mousemove', e => {
-  const dot = document.createElement('div');
-  dot.className = 'trail-dot';
-  dot.style.left = e.clientX + 'px';
-  dot.style.top = e.clientY + 'px';
-  document.body.appendChild(dot);
-  setTimeout(() => dot.remove(), 600);
-});
+      body.classList.add('flicker');
+      setTimeout(() => {
+        body.classList.remove('flicker');
+        scheduleFlicker();
+      }, 450);
+    }, 8000 + Math.random() * 12000);
+  }
+  scheduleFlicker();
+
+  // Красный след за курсором
+  document.addEventListener('mousemove', e => {
+    const dot = document.createElement('div');
+    dot.className = 'trail-dot';
+    dot.style.left = e.clientX + 'px';
+    dot.style.top = e.clientY + 'px';
+    document.body.appendChild(dot);
+    setTimeout(() => dot.remove(), 600);
+  });
+
+  // === Карусель: автолистание, пауза при наведении и вне вкладки ===
+  (function () {
+    const slides = document.querySelectorAll('#carousel .slide');
+    const dotsBox = document.getElementById('car-dots');
+    const progress = document.getElementById('car-progress');
+    const INTERVAL = 5000; // миллисекунд на кадр
+    let idx = 0;
+    let timer = null;
+
+    slides.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'car-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Кадр ' + (i + 1));
+      d.addEventListener('click', () => { show(i); restart(); });
+      dotsBox.appendChild(d);
+    });
+    const dots = dotsBox.querySelectorAll('.car-dot');
+
+    function show(n) {
+      idx = (n + slides.length) % slides.length;
+      slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      progress.classList.remove('run');
+      void progress.offsetWidth; // сброс CSS-анимации прогресса
+      progress.classList.add('run');
+    }
+
+    function next() { show(idx + 1); }
+    function prev() { show(idx - 1); }
+
+    function restart() {
+      clearInterval(timer);
+      timer = setInterval(next, INTERVAL);
+    }
+
+    document.getElementById('car-next').addEventListener('click', () => { next(); restart(); });
+    document.getElementById('car-prev').addEventListener('click', () => { prev(); restart(); });
+
+    const box = document.getElementById('carousel');
+    box.addEventListener('mouseenter', () => clearInterval(timer));
+    box.addEventListener('mouseleave', restart);
+
+    // Вкладка спрятана — таймер не тикает, кадры не прыгают
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) clearInterval(timer);
+      else restart();
+    });
+
+    show(0);
+    restart();
+  })();
 </script>
 </body>
 </html>
